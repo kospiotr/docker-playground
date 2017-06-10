@@ -11,7 +11,8 @@ pipeline {
       steps {
         sh '''echo PATH = ${PATH}
 echo M2_PATH = ${M2_PATH}
-mvn clean'''
+mvn clean
+sleep 10m'''
       }
     }
     stage('Build') {
