@@ -2,7 +2,7 @@ pipeline {
   agent {
     docker {
       args '-v /home/jenkins/.m2:/root/.m2'
-      image 'qnerd/rpi-maven'
+      image 'dordoka/rpi-java8'
     }
     
   }
@@ -17,7 +17,7 @@ sleep 10m'''
     }
     stage('Build') {
       steps {
-        sh 'mvn install -Dmaven.test.failure.ignore=true '
+        sh './gradlew build'
       }
     }
     stage('Report') {
