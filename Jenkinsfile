@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Initialize') {
       steps {
-        sh '''echo pwd
+        sh '''pwd
 echo PATH = ${PATH}
 echo M2_PATH = ${M2_PATH}'''
       }
