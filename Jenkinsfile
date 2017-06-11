@@ -10,9 +10,7 @@ pipeline {
     stage('Initialize') {
       steps {
         sh '''echo PATH = ${PATH}
-echo M2_PATH = ${M2_PATH}
-mvn clean
-sleep 10m'''
+echo M2_PATH = ${M2_PATH}'''
       }
     }
     stage('Build') {
