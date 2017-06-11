@@ -24,5 +24,10 @@ echo M2_PATH = ${M2_PATH}'''
         archiveArtifacts 'build/libs/*.jar'
       }
     }
+    stage('Build docker') {
+      steps {
+        sh './gradlew buildDocker'
+      }
+    }
   }
 }
