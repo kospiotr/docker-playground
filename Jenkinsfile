@@ -21,7 +21,7 @@ echo M2_PATH = ${M2_PATH}'''
     stage('Report') {
       steps {
         junit 'build/test-results/**/*.xml'
-        archiveArtifacts 'build/*.jar,build/*.hpi'
+        archiveArtifacts 'build/libs/*.jar'
       }
     }
   }
