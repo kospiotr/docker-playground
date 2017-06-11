@@ -5,12 +5,12 @@ pipeline {
       steps {
         sh '''pwd
 echo PATH = ${PATH}
-echo M2_PATH = ${M2_PATH}'''
+which gradle'''
       }
     }
     stage('Build') {
       steps {
-        sh './gradlew cleanTest build'
+        sh 'gradle cleanTest build'
       }
     }
     stage('Report') {
@@ -21,7 +21,7 @@ echo M2_PATH = ${M2_PATH}'''
     }
     stage('Build docker') {
       steps {
-        sh './gradlew buildDocker'
+        sh 'gradle buildDocker'
       }
     }
   }
