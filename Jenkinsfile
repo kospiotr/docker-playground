@@ -15,7 +15,7 @@ echo M2_PATH = ${M2_PATH}'''
     }
     stage('Build') {
       steps {
-        sh './gradlew build'
+        sh './gradlew cleanTest build'
       }
     }
     stage('Report') {
