@@ -20,8 +20,8 @@ echo M2_PATH = ${M2_PATH}'''
     }
     stage('Report') {
       steps {
-        junit 'target/surefire-reports/**/*.xml'
-        archiveArtifacts 'target/*.jar,target/*.hpi'
+        junit 'build/test-results/**/*.xml'
+        archiveArtifacts 'build/*.jar,build/*.hpi'
       }
     }
   }
