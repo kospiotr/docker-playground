@@ -10,18 +10,9 @@ which gradle'''
     }
     stage('Build') {
       steps {
-        sh 'gradle cleanTest build'
-      }
-    }
-    stage('Report') {
-      steps {
+        sh 'gradle clean buildDocker'
         junit 'build/test-results/**/*.xml'
         archiveArtifacts 'build/libs/*.jar'
-      }
-    }
-    stage('Build docker') {
-      steps {
-        sh 'gradle buildDocker'
       }
     }
   }
