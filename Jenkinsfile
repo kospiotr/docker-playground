@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Initialize') {
       steps {
-        sh 'echo printenv'
+        sh "echo `printenv`"
         sh '''pwd
 echo PATH = ${PATH}
 which gradle
