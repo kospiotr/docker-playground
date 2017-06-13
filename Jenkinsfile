@@ -12,7 +12,7 @@ export CURRENT_VERSION=`./gradlew printVersion | grep -Po "version: \\K(.*)"`
 export NEW_VERSION=`echo "${CURRENT_VERSION}" | sed "s/-SNAPSHOT/-${BUILD_ID}/g"`
 echo "CURRENT_VERSION=${CURRENT_VERSION}"
 echo "NEW_VERSION=${NEW_VERSION}"'''
-        sh 'sed -i "s/^\(version\s*=\s*\).*$/\1${NEW_VERSION}1/" gradle.properties'
+        sh 'sed -i "s/^\\(version\\s*=\\s*\\).*$/\\1${NEW_VERSION}1/" gradle.properties'
       }
     }
     stage('Build') {
