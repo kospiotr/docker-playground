@@ -2,7 +2,7 @@ pipeline {
   agent any
   stages {
     stage('Initialize') {
-      steps {git
+      steps {
         sh '''echo `printenv`
 pwd
 echo PATH = ${PATH}
