@@ -6,7 +6,7 @@ pipeline {
         sh '''pwd
 echo PATH = ${PATH}
 which gradle
-export CURRENT_VERSION=`./gradlew printVersion | grep -Po "version: \K(.*)"`
+export CURRENT_VERSION=`./gradlew printVersion | grep -Po "version: \\K(.*)"`
 echo "CURRENT_VERSION=${CURRENT_VERSION}"'''
       }
     }
