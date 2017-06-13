@@ -21,7 +21,7 @@ apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'docker'
 
-version = '0.0.1-SNAPSHOT'
+version = project.hasProperty('projVersion') ? project.projVersion : '0.0.1-SNAPSHOT'
 group = 'xperios'
 sourceCompatibility = 1.8
 compileKotlin {
@@ -57,5 +57,11 @@ task buildDocker(type: Docker, dependsOn: build) {
             from jar
             into stageDir
         }
+    }
+}
+
+task printVersion {
+    doLast {
+        println 'version: ' + project.version
     }
 }
