@@ -14,15 +14,17 @@ buildscript {
     }
 }
 
-
 apply plugin: 'kotlin'
 apply plugin: 'kotlin-spring'
 apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'docker'
+apply plugin: "maven"
 
-version = project.hasProperty('projVersion') ? project.projVersion : '0.0.1-SNAPSHOT'
-group = 'xperios'
+jar {
+    baseName = "${artifact}"
+}
+
 sourceCompatibility = 1.8
 compileKotlin {
     kotlinOptions.jvmTarget = "1.8"
@@ -42,10 +44,10 @@ dependencies {
     compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
-
-jar {
-    baseName "sda"
-}
+//
+//jar {
+//    baseName "sda"
+//}
 
 
 task buildDocker(type: Docker, dependsOn: build) {
