@@ -8,7 +8,7 @@ pipeline {
 echo PATH = ${PATH}
 which gradle
 export CURRENT_VERSION=`./gradlew printVersion | grep -Po "version: \\K(.*)"`
-export NEW_VERSION=`echo "${CURRENT_VERSION}" | sed 's/-SNAPSHOT/-${env.BUILD_ID}/g'`
+export NEW_VERSION=`echo "${CURRENT_VERSION}" | sed 's/-SNAPSHOT/-${BUILD_ID}/g'`
 echo "CURRENT_VERSION=${CURRENT_VERSION}"
 echo "NEW_VERSION=${NEW_VERSION}"'''
       }
