@@ -17,7 +17,7 @@ echo "NEW_VERSION=${NEW_VERSION}"'''
     }
     stage('Build') {
       steps {
-        sh 'gradle cleanTest buildDocker'
+        sh 'gradle clean buildDocker install'
         junit 'build/test-results/**/*.xml'
         archiveArtifacts 'build/libs/*.jar'
       }
