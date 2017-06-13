@@ -9,7 +9,7 @@ echo PATH = ${PATH}
 echo BUILD_ID = ${BUILD_ID}
 which gradle
 export CURRENT_VERSION=`./gradlew printVersion | grep -Po "version: \\K(.*)"`
-export NEW_VERSION=`echo "${CURRENT_VERSION}" | sed "s/-SNAPSHOT/-${BUILD_ID}/g"`
+export NEW_VERSION=`echo "${CURRENT_VERSION}-${BUILD_ID}" | sed "s/-SNAPSHOT//g"`
 echo "CURRENT_VERSION=${CURRENT_VERSION}"
 echo "NEW_VERSION=${NEW_VERSION}"'''
         sh 'sed -i "s/^\\(version\\s*=\\s*\\).*$/\\1${NEW_VERSION}1/" gradle.properties'
