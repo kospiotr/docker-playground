@@ -2,8 +2,7 @@ pipeline {
   agent any
   stages {
     stage('Initialize') {
-      steps {
-        sh ""
+      steps {git
         sh '''echo `printenv`
 pwd
 echo PATH = ${PATH}
@@ -21,6 +20,12 @@ sed -i "s/^\\(version\\s*=\\s*\\).*$/\\1${NEW_VERSION}1/" gradle.properties'''
         sh 'gradle clean buildDocker'
         junit 'build/test-results/**/*.xml'
         archiveArtifacts 'build/libs/*.jar'
+      }
+    }
+    stage('Tag') {
+      steps {
+        sh "git tag -a build-${NEW_VERSION} -m 'Tagging build ${NEW_VERSION}'"
+        sh "git push --tags"
       }
     }
   }
