@@ -4,10 +4,6 @@ pipeline {
     stage('Initialize') {
       steps {
         sh '''echo `printenv`
-pwd
-echo PATH = ${PATH}
-echo BUILD_ID = ${BUILD_ID}
-which gradle
 export CURRENT_VERSION=`./gradlew printVersion | grep -Po "version: \\K(.*)"`
 export NEW_VERSION=`echo "${CURRENT_VERSION}-${BUILD_ID}" | sed "s/-SNAPSHOT//g"`
 echo "CURRENT_VERSION=${CURRENT_VERSION}"
@@ -24,7 +20,7 @@ sed -i "s/^\\(version\\s*=\\s*\\).*$/\\1${NEW_VERSION}1/" gradle.properties'''
     }
     stage('Tag') {
       steps {
-        sh 'export NEW_VERSION=`awk -F= \'$1=="test"{print $2}\' gradle.properties`'
+        sh '''export NEW_VERSION=`awk -F= \'$1=="test"{print $2}\' gradle.properties`'''
         sh 'git tag -a build-${NEW_VERSION} -m "Tagging build ${NEW_VERSION}"'
         sh 'git push --tags'
       }
