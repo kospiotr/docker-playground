@@ -20,9 +20,9 @@ sed -i "s/^\\(version\\s*=\\s*\\).*$/\\1${NEW_VERSION}1/" gradle.properties'''
     }
     stage('Tag') {
       steps {
-        sh '''export NEW_VERSION=`awk -F= \'$1=="version"{print $2}\' gradle.properties`'''
-        sh 'git tag -a build-${NEW_VERSION} -m "Tagging build ${NEW_VERSION}"'
-        sh 'git push --tags'
+        sh '''export NEW_VERSION=`awk -F= '$1=="version"{print $2}' gradle.properties`
+git tag -a build-${NEW_VERSION} -m "Tagging build ${NEW_VERSION}"
+git push --tags'''
       }
     }
   }
