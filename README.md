@@ -1,3 +1,1 @@
 # docker-playground
-
-# Hello stranger
