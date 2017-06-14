@@ -6,7 +6,7 @@ pipeline {
         sh '''echo `printenv`
 export CURRENT_VERSION=`./gradlew printVersion | grep -Po "version: \\K(.*)"`
 export NEW_VERSION=`echo "${CURRENT_VERSION}-${BUILD_ID}" | sed "s/-SNAPSHOT//g"`
-sed -i "s/^\\(version\\s*=\\s*\\).*$/\\1${NEW_VERSION}1/" gradle.properties'''
+sed -i "s/^\\(version\\s*=\\s*\\).*$/\\1${NEW_VERSION}/" gradle.properties'''
       }
     }
     stage('Build') {
