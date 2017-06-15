@@ -24,6 +24,7 @@ sed -i "s/^\\(version\\s*=\\s*\\).*$/\\1${NEW_VERSION}/" gradle.properties'''
             steps {
                 sh '''export NEW_VERSION=`awk -F= '$1=="version"{print $2}' gradle.properties`
                 git add .
+                git commit -m "Changing version to ${NEW_VERSION}"
                 git tag -a build-${NEW_VERSION} -m "Tagging build ${NEW_VERSION}"
                 git push --tags'''
             }
