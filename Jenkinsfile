@@ -5,7 +5,7 @@ pipeline {
         steps {
             sh '''echo `printenv`
 CURRENT_VERSION=`./gradlew printVersion | grep -Po "version: \\K(.*)"`
-if [ "${BRANCH_NAME}" == "master" ]; then ID="${BUILD_ID}"; else ID="${BRANCH_NAME}"; fi
+if [ "${BRANCH_NAME}"=="master" ]; then ID="${BUILD_ID}"; else ID="${BRANCH_NAME}"; fi
 NEW_VERSION=`echo "${CURRENT_VERSION}-${BUILD_ID}" | sed "s/-SNAPSHOT//g"`
 sed -i "s/^\\(version\\s*=\\s*\\).*$/\\1${NEW_VERSION}/" gradle.properties'''
             }
