@@ -4,8 +4,9 @@ pipeline {
         stage('Initialize') {
         steps {
             sh '''echo `printenv`
-export CURRENT_VERSION=`./gradlew printVersion | grep -Po "version: \\K(.*)"`
-export NEW_VERSION=`echo "${CURRENT_VERSION}-${BUILD_ID}" | sed "s/-SNAPSHOT//g"`
+CURRENT_VERSION=`./gradlew printVersion | grep -Po "version: \\K(.*)"`
+if [ "${BRANCH_NAME}" == "master" ]; then ID="${BUILD_ID}"; else ID="${BRANCH_NAME}"; fi
+NEW_VERSION=`echo "${CURRENT_VERSION}-${BUILD_ID}" | sed "s/-SNAPSHOT//g"`
 sed -i "s/^\\(version\\s*=\\s*\\).*$/\\1${NEW_VERSION}/" gradle.properties'''
             }
         }
