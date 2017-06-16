@@ -42,10 +42,16 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
+task detectArchitecture(type: Exec) {
+    println System.getProperties()
+    println "architecture: ${System.getProperty("os.arch")}"
+    commandLine "echo System architecture: ${System.getProperty("os.arch")}"
+}
+
 task buildDocker(type: Exec) {
     doFirst {
         copy {
-            from "src/main/docker/"
+            from System.getProperty("os.arch") == "arm" ? "src/main/docker-arm/" : "src/main/docker/"
             into "build/docker/"
             include "*"
         }
@@ -56,14 +62,11 @@ task buildDocker(type: Exec) {
         }
     }
     def tag = "${groupId}/${artifactId}:${version}".toLowerCase()
-    def os = org.gradle.internal.os.OperatingSystem.current()
-    def architecture = System.getProperty("os.arch");
-    def sourceDir = architecture == "arm" ? "build/docker-arm/Dockerfile" : "build/docker/Dockerfile"
-    if (os.isWindows()) {
-        commandLine 'cmd', '/c', 'docker', 'image', 'build', '-f', sourceDir, '-t', tag, 'build/docker/'
+    if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
+        commandLine 'cmd', '/c', 'docker', 'image', 'build', '-f', 'build/docker/Dockerfile', '-t', tag, 'build/docker/'
     } else {
         println("docker image build -f build/docker/Dockerfile -t ${tag} build/docker/")
-        commandLine 'docker', 'image', 'build', '-f', sourceDir, '-t', tag, 'build/docker/'
+        commandLine 'docker', 'image', 'build', '-f', 'build/docker/Dockerfile', '-t', tag, 'build/docker/'
     }
 }
 
