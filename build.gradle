@@ -16,10 +16,8 @@ buildscript {
 
 apply plugin: 'kotlin'
 apply plugin: 'kotlin-spring'
-apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'docker'
-apply plugin: "maven"
 
 jar {
     baseName = "${artifact}"
@@ -44,11 +42,6 @@ dependencies {
     compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
-//
-//jar {
-//    baseName "sda"
-//}
-
 
 task buildDocker(type: Docker, dependsOn: build) {
     push = false

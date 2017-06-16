@@ -1,3 +1,5 @@
+#!/usr/bin/env groovy
+
 pipeline {
     agent any
     stages {
@@ -27,6 +29,14 @@ sed -i "s/^\\(version\\s*=\\s*\\).*$/\\1${NEW_VERSION}/" gradle.properties'''
                 git commit -m "Changing version to ${NEW_VERSION}"
                 git tag -a build-${NEW_VERSION} -m "Tagging build ${NEW_VERSION}"
                 git push --tags'''
+            }
+        }
+        stage('Deploy') {
+            //when {
+            //    expression { env.BRANCH_NAME.startsWith('PR-' }
+            //}
+            steps {
+                echo ''
             }
         }
     }
