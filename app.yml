@@ -1,0 +1,20 @@
+version: '2'
+services:
+    app:
+        image: ${APP_IMAGE}
+        environment:
+            - SPRING_PROFILES_ACTIVE=prod
+            - SPRING_DATASOURCE_URL=jdbc:mysql://app-db:3306/app?useUnicode=true&characterEncoding=utf8&useSSL=false
+        ports:
+            - ${PORT}:8080
+    db:
+        image: mysql:5.7.13
+        volumes:
+             - "~/volumes/${COMPOSE_PROJECT_NAME}/:/var/lib/mysql/"
+        environment:
+            - MYSQL_USER=root
+            - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+            - MYSQL_DATABASE=app
+        expose:
+            - 3306
+        command: mysqld --lower_case_table_names=1 --skip-ssl --character_set_server=utf8

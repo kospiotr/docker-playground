@@ -17,10 +17,9 @@ buildscript {
 apply plugin: 'kotlin'
 apply plugin: 'kotlin-spring'
 apply plugin: 'org.springframework.boot'
-apply plugin: 'docker'
 
 jar {
-    baseName = "${artifact}"
+    baseName = "${artifactId}"
 }
 
 sourceCompatibility = 1.8
@@ -43,14 +42,29 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
-task buildDocker(type: Docker, dependsOn: build) {
-    push = false
-    applicationName = jar.baseName.toLowerCase()
-    dockerfile = file('src/main/docker/Dockerfile')
+task buildDocker(type: Exec) {
     doFirst {
         copy {
-            from jar
-            into stageDir
+            from "src/main/docker/"
+            into "build/docker/"
+            include "*"
+        }
+        copy {
+            from "build/libs"
+            into "build/docker/"
+            include "*.jar"
         }
     }
+    def tag = "${groupId}/${artifactId}:${version}".toLowerCase()
+    if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
+        commandLine 'cmd', '/c', 'docker', 'image', 'build', '-f', 'build/docker/Dockerfile', '-t', tag, 'build/docker/'
+    } else {
+        println("docker image build -f build/docker/Dockerfile -t ${tag} build/docker/")
+        commandLine 'docker', 'image', 'build', '-f', 'build/docker/Dockerfile', '-t', tag, 'build/docker/'
+    }
+}
+
+task runImage(type: Exec) {
+    commandLine 'docker-compose -f src/main/docker/app.yml up'
+
 }

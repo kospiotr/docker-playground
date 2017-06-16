@@ -1,4 +1,4 @@
-FROM dordoka/rpi-java8
+FROM frolvlad/alpine-oraclejdk8:slim
 
 VOLUME /tmp
 EXPOSE 8080
