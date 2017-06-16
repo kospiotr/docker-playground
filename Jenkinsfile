@@ -36,7 +36,7 @@ sed -i "s/^\\(version\\s*=\\s*\\).*$/\\1${NEW_VERSION}/" gradle.properties'''
             //    expression { env.BRANCH_NAME.startsWith('PR-' }
             //}
             steps {
-                sh 'gradle detectArchitecture'
+                echo "deploying"
             }
         }
     }
