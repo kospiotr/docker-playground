@@ -45,7 +45,7 @@ dependencies {
 task detectArchitecture(type: Exec) {
     println System.getProperties()
     println "architecture: ${System.getProperty("os.arch")}"
-    commandLine "echo System architecture: ${$ { System.getProperty("os.arch") }}"
+    commandLine "echo System architecture: ${System.getProperty("os.arch")}"
 }
 
 task buildDocker(type: Exec) {
