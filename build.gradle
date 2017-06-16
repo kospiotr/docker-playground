@@ -42,6 +42,12 @@ dependencies {
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
+task detectArchitecture(type: Exec) {
+    println System.getProperties()
+    println "architecture: ${System.getProperty("os.arch")}"
+    commandLine "echo System architecture: ${$ { System.getProperty("os.arch") }}"
+}
+
 task buildDocker(type: Exec) {
     doFirst {
         copy {
@@ -56,7 +62,11 @@ task buildDocker(type: Exec) {
         }
     }
     def tag = "${groupId}/${artifactId}:${version}".toLowerCase()
-    if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
+    def os = org.gradle.internal.os.OperatingSystem.current()
+    org.gradle.nativeplatform.platform.OperatingSystem.name;
+    println("Name: ${os.name}")
+    println("FamilyName: ${os.familyName}")
+    if (os.isWindows()) {
         commandLine 'cmd', '/c', 'docker', 'image', 'build', '-f', 'build/docker/Dockerfile', '-t', tag, 'build/docker/'
     } else {
         println("docker image build -f build/docker/Dockerfile -t ${tag} build/docker/")
