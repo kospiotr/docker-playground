@@ -42,6 +42,7 @@ ARTIFACT_ID=`awk -F= '$1=="artifactId"{print $2}' gradle.properties`
 CURRENT_VERSION=`awk -F= '$1=="version"{print $2}' gradle.properties`
 TAG=`echo "${GROUP_ID}/${ARTIFACT_ID}:${CURRENT_VERSION}" | awk '{print tolower($0)}'`
 TAKEN_PORTS=`docker ps --format='{{.Ports}}' | grep -Po "(?<=:)\\d+(?=->)" | sort`
+echo "TAKEN_PORTS=${TAKEN_PORTS}"
 FREE_PORT=`for i in {9000..9999}; do if echo "${TAKEN_PORTS}" | grep -q "${i}" ; then continue; else echo "${i}"; break; fi; done`
 echo "FREE_PORT=${FREE_PORT}"
 '''
