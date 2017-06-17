@@ -37,10 +37,10 @@ sed -i "s/^\\(version\\s*=\\s*\\).*$/\\1${NEW_VERSION}/" gradle.properties'''
             //}
             steps {
                 sh '''echo "init"
-GROUP_ID=`awk -F= '$1=="groupId"{print $2}' gradle.properties`
-ARTIFACT_ID=`awk -F= '$1=="artifactId"{print $2}' gradle.properties`
-CURRENT_VERSION=`awk -F= '$1=="version"{print $2}' gradle.properties`
-TAG=`echo "${GROUP_ID}/${ARTIFACT_ID}:${CURRENT_VERSION}" | awk '{print tolower($0)}'`'''
+export GROUP_ID=`awk -F= '$1=="groupId"{print $2}' gradle.properties`
+export ARTIFACT_ID=`awk -F= '$1=="artifactId"{print $2}' gradle.properties`
+export CURRENT_VERSION=`awk -F= '$1=="version"{print $2}' gradle.properties`
+export TAG=`echo "${GROUP_ID}/${ARTIFACT_ID}:${CURRENT_VERSION}" | awk '{print tolower($0)}'`'''
                 echo "deploying docker tag: ${TAG}"
             }
         }
