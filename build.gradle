@@ -16,13 +16,10 @@ buildscript {
 
 apply plugin: 'kotlin'
 apply plugin: 'kotlin-spring'
-apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
-apply plugin: 'docker'
-apply plugin: "maven"
 
 jar {
-    baseName = "${artifact}"
+    baseName = "${artifactId}"
 }
 
 sourceCompatibility = 1.8
@@ -44,26 +41,36 @@ dependencies {
     compile("org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}")
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
-//
-//jar {
-//    baseName "sda"
-//}
 
+task detectArchitecture(type: Exec) {
+    println System.getProperties()
+    println "architecture: ${System.getProperty("os.arch")}"
+    commandLine "echo System architecture: ${System.getProperty("os.arch")}"
+}
 
-task buildDocker(type: Docker, dependsOn: build) {
-    push = false
-    applicationName = jar.baseName.toLowerCase()
-    dockerfile = file('src/main/docker/Dockerfile')
+task buildDocker(type: Exec) {
     doFirst {
         copy {
-            from jar
-            into stageDir
+            from System.getProperty("os.arch") == "arm" ? "src/main/docker-arm/" : "src/main/docker/"
+            into "build/docker/"
+            include "*"
         }
+        copy {
+            from "build/libs"
+            into "build/docker/"
+            include "*.jar"
+        }
+    }
+    def tag = "${groupId}/${artifactId}:${version}".toLowerCase()
+    if (org.gradle.internal.os.OperatingSystem.current().isWindows()) {
+        commandLine 'cmd', '/c', 'docker', 'image', 'build', '-f', 'build/docker/Dockerfile', '-t', tag, 'build/docker/'
+    } else {
+        println("docker image build -f build/docker/Dockerfile -t ${tag} build/docker/")
+        commandLine 'docker', 'image', 'build', '-f', 'build/docker/Dockerfile', '-t', tag, 'build/docker/'
     }
 }
 
-task printVersion {
-    doLast {
-        println 'version: ' + project.version
-    }
+task runImage(type: Exec) {
+    commandLine 'docker-compose -f src/main/docker/app.yml up'
+
 }

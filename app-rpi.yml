@@ -1,0 +1,11 @@
+version: '2'
+services:
+    app:
+        extends:
+            file: app.yml
+            service: app
+    db:
+        extends:
+            file: app.yml
+            service: db
+        image: "hypriot/rpi-mysql"
