@@ -32,9 +32,9 @@ sed -i "s/^\\(version\\s*=\\s*\\).*$/\\1${NEW_VERSION}/" gradle.properties'''
             }
         }
         stage('Deploy') {
-            when {
-                expression { env.BRANCH_NAME.startsWith('PR-' }
-            }
+            //when {
+            //    expression { env.BRANCH_NAME.startsWith('PR-' }
+            //}
             steps {
                 sh '''echo "init"
 GROUP_ID=`awk -F= '$1=="groupId"{print $2}' gradle.properties`
