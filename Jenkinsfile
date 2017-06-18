@@ -14,7 +14,7 @@ sed -i "s/^\\(version\\s*=\\s*\\).*$/\\1${NEW_VERSION}/" gradle.properties'''
         }
         stage('Build') {
             steps {
-                sh 'gradle clean build buildDocker'
+                sh 'gradle cleanTest build buildDocker'
                 junit 'build/test-results/**/*.xml'
                 archiveArtifacts 'build/libs/*.jar'
             }
@@ -36,7 +36,17 @@ sed -i "s/^\\(version\\s*=\\s*\\).*$/\\1${NEW_VERSION}/" gradle.properties'''
             //    expression { env.BRANCH_NAME.startsWith('PR-' }
             //}
             steps {
-                echo "deploying"
+                sh '''echo "init"
+GROUP_ID=`awk -F= '$1=="groupId"{print $2}' gradle.properties`
+ARTIFACT_ID=`awk -F= '$1=="artifactId"{print $2}' gradle.properties`
+CURRENT_VERSION=`awk -F= '$1=="version"{print $2}' gradle.properties`
+TAG=`echo "${GROUP_ID}/${ARTIFACT_ID}:${CURRENT_VERSION}" | awk '{print tolower($0)}'`
+TAKEN_PORTS=`docker ps --format='{{.Ports}}' | grep -Po "(?<=:)\\d+(?=->)" | sort`
+MIN_PORT="9000"
+MAX_PORT="9999"
+FREE_PORT=`seq ${MIN_PORT} ${MAX_PORT} | grep -v "$TAKEN_PORTS" | head -n 1`
+echo "FREE_PORT=${FREE_PORT}"
+'''
             }
         }
     }
