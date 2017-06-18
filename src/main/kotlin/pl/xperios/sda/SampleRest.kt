@@ -10,7 +10,7 @@ class SampleRest {
 
     @GetMapping("/hello")
     fun hello(): String {
-        return "hello"
+        return "helloooooooooo"
     }
 
     @RequestMapping("/world")
