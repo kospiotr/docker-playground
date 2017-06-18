@@ -45,7 +45,8 @@ MIN_PORT="9000"
 MAX_PORT="9999"
 export APP_IMAGE=`echo "${GROUP_ID}/${ARTIFACT_ID}:${CURRENT_VERSION}" | awk '{print tolower($0)}'`
 export PORT=`seq ${MIN_PORT} ${MAX_PORT} | grep -v "$TAKEN_PORTS" | head -n 1`
-export COMPOSE_PROJECT_NAME=` echo "${BRANCH_NAME}" | awk '{print tolower($0)}'`
+export COMPOSE_PROJECT_NAME=` echo "${ARTIFACT_ID}_${BRANCH_NAME}" | awk '{print tolower($0)}'`
+docker stop $(docker ps --filter "label=pl.xperios.project=${COMPOSE_PROJECT_NAME}" -q)
 docker-compose -f app-rpi.yml up -d
 '''
             }
