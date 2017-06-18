@@ -40,12 +40,13 @@ sed -i "s/^\\(version\\s*=\\s*\\).*$/\\1${NEW_VERSION}/" gradle.properties'''
 GROUP_ID=`awk -F= '$1=="groupId"{print $2}' gradle.properties`
 ARTIFACT_ID=`awk -F= '$1=="artifactId"{print $2}' gradle.properties`
 CURRENT_VERSION=`awk -F= '$1=="version"{print $2}' gradle.properties`
-TAG=`echo "${GROUP_ID}/${ARTIFACT_ID}:${CURRENT_VERSION}" | awk '{print tolower($0)}'`
+APP_IMAGE=`echo "${GROUP_ID}/${ARTIFACT_ID}:${CURRENT_VERSION}" | awk '{print tolower($0)}'`
 TAKEN_PORTS=`docker ps --format='{{.Ports}}' | grep -Po "(?<=:)\\d+(?=->)" | sort`
 MIN_PORT="9000"
 MAX_PORT="9999"
-FREE_PORT=`seq ${MIN_PORT} ${MAX_PORT} | grep -v "$TAKEN_PORTS" | head -n 1`
-echo "FREE_PORT=${FREE_PORT}"
+PORT=`seq ${MIN_PORT} ${MAX_PORT} | grep -v "$TAKEN_PORTS" | head -n 1`
+COMPOSE_PROJECT_NAME=` echo "${BRANCH_NAME}" | awk '{print tolower($0)}'`
+docker-compose -f app.yml up -d
 '''
             }
         }
