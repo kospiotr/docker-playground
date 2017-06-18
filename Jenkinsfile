@@ -46,7 +46,7 @@ MIN_PORT="9000"
 MAX_PORT="9999"
 PORT=`seq ${MIN_PORT} ${MAX_PORT} | grep -v "$TAKEN_PORTS" | head -n 1`
 COMPOSE_PROJECT_NAME=` echo "${BRANCH_NAME}" | awk '{print tolower($0)}'`
-docker-compose -f app.yml up -d
+docker-compose -f app-rpi.yml up -d
 '''
             }
         }
