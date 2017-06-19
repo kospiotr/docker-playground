@@ -30,4 +30,3 @@ The goal of this project is to demonstrate and learn how Jenkins with modern pip
    * image version from `gradle.properties`
    * port: first available port from range `9000 - 9999`
    * container name
- * add message to PR
