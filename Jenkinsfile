@@ -48,7 +48,7 @@ MAX_PORT="9999"
 export APP_IMAGE=`echo "${GROUP_ID}/${ARTIFACT_ID}:${CURRENT_VERSION}" | awk '{print tolower($0)}'`
 export PORT=`seq ${MIN_PORT} ${MAX_PORT} | grep -v "$TAKEN_PORTS" | head -n 1`
 if [ -z "${PORT}" ]; then export PORT="${MIN_PORT}"; fi
-docker-compose -f app-rpi-dev.yml up -d
+docker-compose -f app-rpi-dev.yml up -d --remove-orphans
 echo "Application succesfully deployed and available under: http://inst${PORT}.dev.xperios.pl"
 '''
             }
