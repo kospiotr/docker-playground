@@ -1,0 +1,6 @@
+version: '2'
+services:
+    app:
+        extends:
+            file: app-dev.yml
+            service: app

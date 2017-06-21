@@ -2,10 +2,10 @@ version: '2'
 services:
     app:
         extends:
-            file: app.yml
+            file: app-prod.yml
             service: app
     db:
         extends:
-            file: app.yml
+            file: app-prod.yml
             service: db
         image: "hypriot/rpi-mysql"

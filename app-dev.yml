@@ -1,0 +1,11 @@
+version: '2'
+services:
+    app:
+        image: ${APP_IMAGE}
+        environment:
+            - SPRING_PROFILES_ACTIVE=dev
+            - SPRING_DATASOURCE_URL=jdbc:mysql://app-db:3306/app?useUnicode=true&characterEncoding=utf8&useSSL=false
+        ports:
+            - ${PORT}:8080
+        labels:
+              pl.xperios.project: "${COMPOSE_PROJECT_NAME}"
