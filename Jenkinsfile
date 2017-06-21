@@ -55,3 +55,4 @@ echo "Application succesfully deployed and available under: http://inst${PORT}.d
         }
     }
 }
+
