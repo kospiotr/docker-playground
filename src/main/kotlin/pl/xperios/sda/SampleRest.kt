@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 class SampleRest {
 
+    @RequestMapping("/")
+    fun index(): String {
+        return "Hi there stranger"
+    }
 
     @GetMapping("/hello")
     fun hello(): String {
