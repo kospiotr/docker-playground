@@ -14,7 +14,7 @@ sed -i "s/^\\(version\\s*=\\s*\\).*$/\\1${NEW_VERSION}/" gradle.properties'''
         }
         stage('Build') {
             steps {
-                sh 'gradle cleanTest build buildDocker'
+                sh 'gradle clean cleanTest build buildDocker'
                 junit 'build/test-results/**/*.xml'
                 archiveArtifacts 'build/libs/*.jar'
             }
