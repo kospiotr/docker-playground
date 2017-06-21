@@ -1,3 +1,7 @@
+# Used for dev purposes on the RPI, like PR or branch testing
+# Uses image with dev profile
+# Does not use DB, application should in memory DB
+
 version: '2'
 services:
     app:
