@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Initialize') {
         steps {
-            sh 'echo "test"'
+            sh 'echo "test2"'
             sh '''echo `printenv`
 CURRENT_VERSION=`awk -F= '$1=="version"{print $2}' gradle.properties`
 if [ "${BRANCH_NAME}" = "master" ]; then ID="${BUILD_ID}"; else ID="${BRANCH_NAME}"; fi
