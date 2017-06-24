@@ -3,6 +3,6 @@ node {
   gradle = tool name: 'GRADLE'
 
   sh "${jdk}/bin/java -version"
-  sh "${gradle}/bin/gradle --version"
+  sh "${gradle}/bin/gradle -g --version"
 
 }
