@@ -21,11 +21,13 @@ node {
 
         // note that simple quote strings are not evaluated by Groovy
         // substitution is done by shell script using environment
+    }
 
+    stage('Clean') {
         deleteDir()
     }
 
-    stage('Environment') {
+    stage('Build') {
         sh '$JAVA_HOME/bin/java -version'
         sh "${gradle}/bin/gradle --version"
     }
