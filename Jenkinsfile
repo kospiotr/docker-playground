@@ -3,6 +3,7 @@ node {
   gradle = tool name: 'GRADLE'
 
   echo `printenv`
+  echo `pwd`
   env.JAVA_HOME = "${jdk}"
 
   echo "jdk installation path is: ${jdk}"
