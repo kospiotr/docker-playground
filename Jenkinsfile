@@ -1,6 +1,8 @@
 node {
   jdk = tool name: 'JDK18'
   gradle = tool name: 'GRADLE'
+
+  echo `printenv`
   env.JAVA_HOME = "${jdk}"
 
   echo "jdk installation path is: ${jdk}"
