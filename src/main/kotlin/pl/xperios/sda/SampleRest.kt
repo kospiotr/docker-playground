@@ -9,7 +9,7 @@ class SampleRest {
 
     @RequestMapping("/")
     fun index(): String {
-        return "Hi there stranger"
+        return "Hi there stranger, hosted from test1 branch updated"
     }
 
     @GetMapping("/hello")
