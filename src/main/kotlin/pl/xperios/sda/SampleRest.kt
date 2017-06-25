@@ -19,6 +19,11 @@ class SampleRest {
 
     @RequestMapping("/world")
     fun world(): String {
+        return "world"
+    }
+
+    @RequestMapping("/world2")
+    fun world2(): String {
         return "world2"
     }
 
